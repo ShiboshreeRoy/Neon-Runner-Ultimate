@@ -1,0 +1,339 @@
+:root {
+            --bg-color: #0b0b14;
+            --accent-color: #00f3ff;
+            --secondary-color: #bc13fe;
+            --text-color: #ffffff;
+            --danger-color: #ff2a6d;
+            --ui-font: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--ui-font);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        #game-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            background: #120c1f;
+            border-radius: 4px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 20;
+        }
+
+        #top-hud {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .hud-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #score-board {
+            text-align: right;
+        }
+
+        #currency-display {
+            font-size: 20px;
+            color: #ffd700;
+            font-weight: bold;
+            text-shadow: 0 0 5px #ffd700;
+            margin-bottom: 5px;
+        }
+
+        #level-indicator {
+            text-align: left;
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-style: italic;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        #current-score {
+            font-size: 42px;
+            font-weight: 800;
+            font-style: italic;
+            background: linear-gradient(to bottom, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            opacity: 0;
+            transition: opacity 0.3s;
+            margin-top: 2px;
+        }
+
+        /* Cooldown Bar */
+        #dash-container {
+            width: 150px;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 3px;
+            margin-top: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        #dash-bar {
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            transform-origin: left;
+            transform: scaleX(1);
+            transition: transform 0.1s linear;
+        }
+        
+        #dash-label {
+            font-size: 10px; 
+            color: var(--accent-color); 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        /* Interactive Buttons */
+        .interactive-btn {
+            pointer-events: auto;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+        .interactive-btn:hover {
+            background: var(--accent-color);
+            color: #000;
+        }
+
+        #settings-bar {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Screens */
+        #start-screen, #game-over-screen, #pause-screen, #shop-screen, #countdown-screen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: rgba(11, 11, 20, 0.95);
+            padding: 40px;
+            border-radius: 4px;
+            border: 1px solid var(--accent-color);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            pointer-events: auto;
+            transition: opacity 0.3s ease;
+            z-index: 30;
+            min-width: 350px;
+        }
+
+        #countdown-screen {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            font-size: 120px;
+            font-weight: 900;
+            font-style: italic;
+            color: #fff;
+            text-shadow: 0 0 30px var(--accent-color);
+            pointer-events: none;
+        }
+
+        #shop-screen {
+            width: 80%;
+            height: 80%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 20px;
+            align-items: stretch;
+        }
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            overflow-y: auto;
+            margin: 20px 0;
+            flex-grow: 1;
+        }
+
+        .shop-item {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #333;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .shop-item:hover {
+            border-color: var(--accent-color);
+            background: rgba(0, 243, 255, 0.1);
+        }
+
+        .shop-item.purchased {
+            border-color: #00ff00;
+        }
+        
+        .shop-item.active {
+            border-color: #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .item-price {
+            color: #ffd700;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none !important;
+            display: none !important;
+        }
+        
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 48px;
+            text-transform: uppercase;
+            font-style: italic;
+            font-weight: 900;
+            letter-spacing: -2px;
+            background: linear-gradient(to right, var(--accent-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(188, 19, 254, 0.5));
+        }
+
+        h2 {
+            font-size: 36px;
+            color: #fff;
+            text-shadow: 0 0 20px var(--accent-color);
+            margin: 0;
+            text-transform: uppercase;
+            font-style: italic;
+        }
+
+        p {
+            margin: 0 0 25px 0;
+            color: #ccc;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .btn {
+            background: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 30px var(--accent-color);
+        }
+
+        .controls-hint {
+            margin-top: 20px;
+            font-size: 12px;
+            opacity: 0.6;
+            font-family: monospace;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 10px;
+        }
+
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 100;
+        }
+        
+        .vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.8) 100%);
+            pointer-events: none;
+            z-index: 101;
+ }

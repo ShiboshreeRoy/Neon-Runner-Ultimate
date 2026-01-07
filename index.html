@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Neon Runner Ultimate: Career Edition</title>
+    <link rel="stylesheet" href="./app/styles/style.css">
+
+</head>
+<body>
+
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div class="scanlines"></div>
+        <div class="vignette"></div>
+
+        <!-- HUD -->
+        <div class="ui-layer">
+            <div id="top-hud">
+                <div class="hud-group">
+                    <div id="settings-bar">
+                        <button class="interactive-btn" id="pause-btn" onclick="togglePause()">II</button>
+                        <button class="interactive-btn" id="mute-btn" onclick="toggleMute()">🔊</button>
+                        <button class="interactive-btn" id="shop-btn" onclick="openShop()" style="color:#ffd700; border-color: #ffd700;">$</button>
+                    </div>
+                    <div id="level-indicator">
+                        <div id="level-name" style="color: var(--accent-color)">NEON CITY</div>
+                    </div>
+                    <div>
+                        <div id="dash-label">PHASE DASH [SHIFT]</div>
+                        <div id="dash-container">
+                            <div id="dash-bar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="score-board">
+                    <div id="currency-display">💎 0</div>
+                    <div id="current-score">00000</div>
+                    <div id="high-score">RECORD: 00000</div>
+                    <div id="shield-status" class="status-badge" style="border-color: var(--secondary-color); color: var(--secondary-color);">SHIELD ACTIVE</div>
+                    <div id="magnet-status" class="status-badge" style="border-color: #fff; color: #fff;">MAGNET ON</div>
+                    <div id="warp-status" class="status-badge" style="border-color: #00f3ff; color: #00f3ff;">TIME WARP</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screens -->
+        <div id="start-screen">
+            <h1>Neon Runner</h1>
+            <p>CAREER EDITION v3.0</p>
+            <button class="btn" onclick="startCountdown()">INITIATE RUN</button>
+            <div class="controls-hint">
+                [SPACE] Jump • [SHIFT] Phase Dash • [DOWN] Fast Drop<br>
+                Avoid Red Obstacles • Collect Data Cores
+            </div>
+        </div>
+
+        <div id="countdown-screen" class="hidden">3</div>
+
+        <div id="pause-screen" class="hidden">
+            <h2>PAUSED</h2>
+            <button class="btn" onclick="togglePause()">RESUME</button>
+            <button class="btn" style="border-color: #fff; color: #fff; margin-left: 10px;" onclick="resetGame()">RESTART</button>
+        </div>
+
+        <!-- Shop Screen -->
+        <div id="shop-screen" class="hidden">
+            <h2>DATA STORE</h2>
+            <div style="text-align: right; color: #ffd700; font-weight: bold;" id="shop-currency">💎 0</div>
+            <div class="shop-grid" id="shop-items">
+                <!-- Populated by JS -->
+            </div>
+            <button class="btn" onclick="closeShop()">CLOSE</button>
+        </div>
+
+        <div id="game-over-screen" class="hidden">
+            <h1 style="background: linear-gradient(to right, #ff2a6d, #ff5f6d); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">SYSTEM FAILURE</h1>
+            <p>DISTANCE: <span id="final-score">0</span> • EARNED: <span id="run-currency" style="color:#ffd700">0</span></p>
+            <button class="btn" style="border-color: var(--danger-color); color: var(--danger-color)" onclick="resetGame()">REBOOT SYSTEM</button>
+            <button class="btn" style="border-color: #ffd700; color: #ffd700; margin-top: 10px;" onclick="openShop()">OPEN SHOP</button>
+        </div>
+    </div>
+    <script src="./config/app.js"></script>
+</body>
+</html>
